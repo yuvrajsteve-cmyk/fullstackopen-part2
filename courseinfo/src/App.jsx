@@ -1,63 +1,84 @@
-
-
-
-const Couese = (props) => {
-
+const Course = (props) => {
   const { course } = props
+  console.log(props)
 
-  const total = course.parts.reduce((sum , part) => {
-    console.log(`What is happning here:`, sum, part)
-    return sum + part.exercise
+  const total = course.parts.reduce((sum , part) =>{
+    console.log(`Whats happning here:`, sum, part)
+    return sum + part.exercises
   }, 0)
-
-  
 
   return (
     <div>
-      <h1>{course.name}</h1>
-          <ul>
-            {course.parts.map(item => (
-              <p key={item.id}>
-                {item.name} {item.exercise}
-              </p>
-            ))}
-           <p>total of {total} exercises</p>
-          </ul>
          
+         <div>
+          <h2>{course.name}</h2>
+          {course.parts.map(part => (
+            <p style={{fontWeight: 'bold'}} 
+             key={part.id}>{part.name} - {part.exercises}</p>
+          ))}
+          <h3>total of {total} exercises</h3>
+         </div>
     </div>
   )
 }
 
+
+
+
 const App = () => {
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
-      {
-      name: 'Fundamentals of React',
-      exercise: 10,
-      id: 1
-      },
-      {
-        name: 'Using props to pass the data',
-        exercise: 7,
-        id: 2
-      },
-      {
-        name: 'State of component',
-        exercise: 14,
-        id: 3
-      },
-      { name: 'Redux',
-        exercise: 11, 
-        id: 4
-       }
-    ]
-  }
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
+
   return (
-    
-      <Couese  course={course}/>
-    
+    <div>
+      <h1>Web development curriculum</h1>
+          {courses.map(course => (
+            <Course key={course.id} course={course} />
+
+          ))}
+    </div>
   )
 }
 
