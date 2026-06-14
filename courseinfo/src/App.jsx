@@ -1,9 +1,14 @@
-import React from 'react'
+
 
 
 const Couese = (props) => {
 
   const { course } = props
+
+  let total = 0
+  course.parts.forEach(part => {
+    total += part.exercise
+  })
 
   
 
@@ -12,11 +17,13 @@ const Couese = (props) => {
       <h1>{course.name}</h1>
           <ul>
             {course.parts.map(item => (
-              <li key={item.id}>
+              <p key={item.id}>
                 {item.name} {item.exercise}
-              </li>
+              </p>
             ))}
+            <p>total of {total} exercise</p>
           </ul>
+         
     </div>
   )
 }
@@ -40,7 +47,11 @@ const App = () => {
         name: 'State of component',
         exercise: 14,
         id: 3
-      }
+      },
+      { name: 'Redux',
+        exercise: 11, 
+        id: 4
+       }
     ]
   }
   return (
