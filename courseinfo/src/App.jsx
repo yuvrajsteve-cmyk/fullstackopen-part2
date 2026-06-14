@@ -5,10 +5,10 @@ const Couese = (props) => {
 
   const { course } = props
 
-  let total = 0
-  course.parts.forEach(part => {
-    total += part.exercise
-  })
+  const total = course.parts.reduce((sum , part) => {
+    console.log(`What is happning here:`, sum, part)
+    return sum + part.exercise
+  }, 0)
 
   
 
@@ -21,7 +21,7 @@ const Couese = (props) => {
                 {item.name} {item.exercise}
               </p>
             ))}
-            <p>total of {total} exercise</p>
+           <p>total of {total} exercises</p>
           </ul>
          
     </div>
