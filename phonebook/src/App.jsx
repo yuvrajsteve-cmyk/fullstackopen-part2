@@ -1,59 +1,46 @@
-import { useState } from 'react'
-import Note from './components/Note'
-
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
-  const [newNote, setNewNote] = useState(``)
-  const [showAll, setShowAll] = useState(true)
+import { useState } from "react"
 
 
-  const addNote = (event) => {
+
+
+const App = () => {
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas'}
+  ])
+
+  const [newName, setNewName] = useState('')
+
+  const addPerson = (event) => {
     event.preventDefault()
-    console.log('button clicked', event.target)
-
-    const noteObject = {
-      content: newNote,
-      important: Math.random() > 0.5,
-      id: String(notes.length + 1),
+    const personObject = {
+      name: newName
     }
-
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
-}
-
-   const notesToShow = showAll 
-   ? notes
-   : notes.filter(note => note.important === true)
-
-  const handleNoteChange = (event) => {
-    console.log(event.target.value)
-    setNewNote(event.target.value)
+    setPersons(persons.concat(personObject))
+    setNewName('')
   }
 
+  const handleNameChange = (event) => {
+    setNewName(event.target.value)
+  }
   return (
     <div>
-      <h1>Notes</h1>
-      <div>
-        <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'important' : 'all'}</button>
-      </div>
-      <ul>
-        {notesToShow.map(note => 
-          <Note key={note.id} note={note}/>
-        )}
-      </ul>
-      <ul>
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
-        )}
-      </ul>
-
-      <form onSubmit={addNote}>
-      <input value={newNote} onChange={handleNoteChange}/>
-        <button type="submit">save</button>
-      </form>   
+         <h2>Phonebook</h2>
+         <form onSubmit={addPerson}>
+          <div>
+            name: <input value={newName} onChange={handleNameChange}/>
+          </div>
+          <div>
+            <button type="submit">add</button>
+          </div>
+         </form>
+         <h2>numbers</h2>
+         <ul>
+          {persons.map(person => 
+            <li key={person.name}>{person.name}</li>
+          )}
+         </ul>
     </div>
   )
 }
-
 
 export default App
