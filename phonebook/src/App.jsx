@@ -2,18 +2,13 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 const App = () => {
- 
+  
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  
- 
-  const [notes, setNotes] = useState([]) 
-  const [newNote, setNewNote] = useState('') 
 
   
   useEffect(() => {
-    
     axios.get('http://localhost:3001/persons').then(response => {
       setPersons(response.data)
     })
@@ -22,7 +17,6 @@ const App = () => {
   
   const handleNameChange = (event) => setNewName(event.target.value)
   const handleNumberChange = (event) => setNewNumber(event.target.value)
-  
 
  
   const addName = (event) => {
@@ -37,7 +31,6 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: String(new Date().getTime())
     }
 
     axios
@@ -48,9 +41,11 @@ const App = () => {
         setNewNumber('')
       })
   }
-    const deletePerson = (id, name) => {
-      if (window.confirm(`Delete ${name}?`)) {
-        axios
+
+  
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      axios
         .delete(`http://localhost:3001/persons/${id}`)
         .then(() => {
           setPersons(persons.filter(person => person.id !== id))
@@ -59,12 +54,11 @@ const App = () => {
           alert(`This person was already deleted from the server`)
           setPersons(persons.filter(person => person.id !== id))
         })
-      }
     }
+  }
 
   return (
     <div>
-     
       <h1>PhoneBook</h1>
       <form onSubmit={addName}>
         <div>name: <input value={newName} onChange={handleNameChange} /></div>
@@ -75,16 +69,12 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map(person => 
-          <li key={person.id}>{person.name} {person.number} {' '}
-          <button onClick={() => deletePerson(person.id, person.name)}>delete</button>
+          <li key={person.id}>
+            {person.name} {person.number} {' '}
+            <button onClick={() => deletePerson(person.id, person.name)}>delete</button>
           </li>
         )}
       </ul>
-
-      <hr /> 
-
-      
-      
     </div>
   )
 }

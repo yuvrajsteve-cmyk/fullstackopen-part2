@@ -26,5 +26,137 @@
       "id": "fkbjmFRtipI"
     }
   ],
+  "notes": [
+    {
+      "content": "This is the notes app",
+      "important": false,
+      "id": "BNKf5nh4lBg"
+    },
+    {
+      "content": "Hi there ! My name is yuvraj singh and i'm from ludhiana , Gureh , pin Code 142023",
+      "important": false,
+      "id": "rk_ZNRbcE20"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "i9YUWe0FFHM"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "hnWxkfYSlWM"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "J7G_DRyJveg"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "GSgXjFcOerY"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "9rYRRwbXXvc"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "m8VrUh60pBg"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "ZSc1Pyzn3_s"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "KUJNFOEaOrE"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "6NhY9crTmzE"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "wddoLeDfhXg"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "9lwJxH-yJB4"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "tgAzewEqJc4"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "IpPVbuQHgqc"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "ogYhB-jTJgg"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "oei80zh5KUo"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "_DUKLVDvsQA"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "Pyzim7Ju33U"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "ESyjaAbX8S0"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "-SZs3JGdXC0"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "P2da4HwYU3E"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "b58Zs34C0l0"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "xVhSsdEJVsY"
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": "c7_igYGg50g"
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": "hYHKdm8EjsE"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
