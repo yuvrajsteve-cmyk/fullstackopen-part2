@@ -1,20 +1,20 @@
-import axios from 'axios'
+import personService from './Services/Persons'
 import { useEffect, useState } from 'react'
 
 const App = () => {
-  
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
-  
+ 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then(response => {
-      setPersons(response.data)
-    })
+    personService
+      .getAll()
+      .then(initialPerson => {
+        setPersons(initialPerson)
+      }) 
   }, [])
 
-  
   const handleNameChange = (event) => setNewName(event.target.value)
   const handleNumberChange = (event) => setNewNumber(event.target.value)
 
@@ -33,20 +33,22 @@ const App = () => {
       number: newNumber,
     }
 
-    axios
-      .post('http://localhost:3001/persons', personObject)
-      .then(response => {
-        setPersons(persons.concat(response.data))
+   
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson)) 
         setNewName('')
         setNewNumber('')
       })
   }
 
-  
+ 
   const deletePerson = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
-      axios
-        .delete(`http://localhost:3001/persons/${id}`)
+     
+      personService
+        .remove(id)
         .then(() => {
           setPersons(persons.filter(person => person.id !== id))
         })
