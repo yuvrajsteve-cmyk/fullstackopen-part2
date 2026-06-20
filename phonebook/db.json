@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Yuvraj Singh ",
-      "number": "6586224596",
-      "id": "9K1il62FymY"
-    },
-    {
       "name": "Satinder Pal Singh",
       "number": "7895446821",
       "id": "Ou6AKZY4Wts"
@@ -14,11 +9,6 @@
       "name": "Jasspreet Singh",
       "number": "7877854213",
       "id": "VOwj-kKiE8Y"
-    },
-    {
-      "name": "Karanpreet",
-      "number": "8966247312",
-      "id": "MvsOkRLMkC0"
     },
     {
       "name": "Surjeet Kapoor",
