@@ -6,7 +6,40 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [allCountries, setAllCountries] = useState([])
   const [selectedCountry, setSelectedCountry] = useState(null)
+  const [weather, setWeather] = useState(null)
+  const api_key = import.meta.env.VITE_WEATHER_KEY
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value)
+    setSelectedCountry(null)
+  }
+
+   const countriesToShow = allCountries.filter(country => 
+    country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
+   const activeCountry = selectedCountry
+      ? selectedCountry
+      : countriesToShow.length === 1
+      ? countriesToShow[0]
+      : null
+
+
+  useEffect (() => {
+     if (activeCountry && activeCountry.capital && activeCountry.capital.length > 0){
+      const capital = activeCountry.capital[0]
+
+      axios
+      .get(`https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${api_key}&units=metric`)
+      .then(response => {
+        setWeather(response.data)
+        console.log('weather data loaded successfully', response.data)
+      })
+      .catch(error => {
+        console.log(`Error fetching weather data`, error);        
+      })
+     }   
+  }, [activeCountry])    
 
   useEffect (() => {
      axios
@@ -17,14 +50,17 @@ const App = () => {
      } )
   }, [])
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value)
-    setSelectedCountry(null)
-  }
+  
 
-  const countriesToShow = allCountries.filter(country => 
-    country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+ 
+
+  
+
+  
+
+ 
+
+  
 
   let renderContent = null
   if(selectedCountry !== null) {
@@ -39,6 +75,14 @@ const App = () => {
       )}
       </ul>
       <img src={selectedCountry.flags.png} alt={`flag of ${selectedCountry.name.common}`} />
+         {weather && (
+          <div>
+            <h2>Weather in {weather.name}</h2>
+            <p>temprature {weather.main.temp} Celsius</p>
+            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="weather icon" />
+           <p>wind {weather.wind.speed} m/s</p>
+          </div>
+         )}
     </div>
   }
   else if (countriesToShow.length > 10) {
@@ -64,6 +108,14 @@ const App = () => {
       )}
       </ul>
       <img src={country.flags.png} alt={`flag of ${country.name.common}`} />
+      {weather && (
+        <div>
+          <h2>Weather in {country.capital?.[0]}</h2>
+          <p>temperature {weather.main.temp} Celsius</p>
+          <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="weather icon" />
+          <p>wind {weather.wind.speed} m/s</p>
+        </div>
+)}
     </div>
   }
 
