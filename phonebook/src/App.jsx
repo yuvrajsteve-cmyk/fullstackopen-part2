@@ -104,15 +104,13 @@ const App = () => {
       })
       // updated code for part 3
         .catch(error => {
-        console.log('Full error object:', error);
-        
-        // ਇੱਥੇ ਪੱਕਾ alert ਆਉਣਾ ਚਾਹੀਦਾ ਹੈ
-        if (error.response && error.response.data && error.response.data.error) {
-          alert(error.response.data.error);
-        } else {
-          alert('An error occurred');
-        }
-      })
+  console.log('Error:', error); 
+  if (error.response && error.response.data && error.response.data.error) {
+    alert(error.response.data.error);
+  } else {
+    alert('Something went wrong!');
+  }
+})
   }
 
   return (
