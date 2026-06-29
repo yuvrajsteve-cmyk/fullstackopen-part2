@@ -103,16 +103,17 @@ const App = () => {
         setNewNumber('')
       })
       .catch(error => {
-      
-        console.log('Error data:', error.response.data)
-        
-        
-        if (error.response.data.error) {
-          alert(error.response.data.error)
-        } else {
-          alert('Something went wrong')
-        }
-      })
+  
+  console.log('Error object:', error)
+  
+  
+  if (error.response && error.response.data && error.response.data.error) {
+   
+    alert(error.response.data.error)
+  } else {
+    alert('An unexpected error occurred')
+  }
+})
   }
 
   return (
