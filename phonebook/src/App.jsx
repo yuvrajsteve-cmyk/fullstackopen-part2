@@ -104,9 +104,14 @@ const App = () => {
       })
       // updated code for part 3
       .catch(error => {
-        console.log(error)
-        alert(error.response.date?.error || 'no mistake')
-      })
+  console.log("the error object:", error);
+  
+  if (error.response && error.response.data && error.response.data.error) {
+    alert(error.response.data.error);
+  } else {
+    alert("there is no fault, check the terminal!");
+  }
+})
   }
 
   return (
