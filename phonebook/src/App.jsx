@@ -104,17 +104,19 @@ const App = () => {
       })
       // updated code for part 3
       .catch(error => {
- 
-  console.log('Error object structure:', error); 
-  console.log('Error message from server:', error.response.data.error);
+        console.log('Error details:', error.response);
 
-  
-  if (error.response && error.response.data && error.response.data.error) {
-    alert(error.response.data.error);
-  } else {
-    alert('A unknown mistake');
-  }
-})
+        if (error.response && error.response.data && error.response.data.error) {
+        
+          alert(error.response.data.error);
+        } else if (error.response && error.response.data) {
+          
+          alert(error.response.data);
+        } else {
+          
+          alert('An unknown error occurred');
+        }
+      })
   }
 
   return (
