@@ -104,12 +104,13 @@ const App = () => {
       })
       // updated code for part 3
       .catch(error => {
-  console.log("the error object:", error);
+  
+  console.log('Error object:', error)
   
   if (error.response && error.response.data && error.response.data.error) {
-    alert(error.response.data.error);
+    alert(error.response.data.error)
   } else {
-    alert("there is no fault, check the terminal!");
+    alert('Something went wrong!')
   }
 })
   }
