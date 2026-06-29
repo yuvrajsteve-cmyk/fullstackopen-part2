@@ -75,7 +75,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
-  // 🔄 ਪੇਜ ਲੋਡ ਹੁੰਦੇ ਹੀ ਬੈਕਐਂਡ ਤੋਂ ਡਾਟਾ ਮੰਗਵਾਉਣਾ
+ 
   useEffect(() => {
     personService
       .getAll()
@@ -102,23 +102,17 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
-      // updated code for part 3
-        .catch(error => {
-  // ਆਹ line ਕੰਸੋਲ ਵਿੱਚ ਪੂਰਾ ਐਰਰ ਆਬਜੈਕਟ ਦਿਖਾਏਗੀ
-  console.log('Error object:', error);
-
-  if (error.response) {
-    
-    const message = error.response.data.error || 'Unknown error from server';
-    alert(message);
-  } else if (error.request) {
-  
-    alert('Server not responding');
-  } else {
-   
-    alert('Error: ' + error.message);
-  }
-})
+      .catch(error => {
+      
+        console.log('Error data:', error.response.data)
+        
+        
+        if (error.response.data.error) {
+          alert(error.response.data.error)
+        } else {
+          alert('Something went wrong')
+        }
+      })
   }
 
   return (
