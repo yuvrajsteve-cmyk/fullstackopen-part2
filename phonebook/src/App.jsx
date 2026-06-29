@@ -87,7 +87,7 @@ const App = () => {
       })
   }, [])
 
-  const addPerson = (event) => {
+     const addPerson = (event) => {
     event.preventDefault()
 
     const personObject = {
@@ -102,11 +102,15 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
-     
       .catch(error => {
-  debugger; 
-  alert(error.response.data.error);
-})
+        console.log('Full error response:', error.response);
+        if (error.response && error.response.data && error.response.data.error) {
+          alert(error.response.data.error);
+        } else {
+          alert('Error: ' + (error.message || 'Unknown error'));
+        }
+      })
+  } 
 
   return (
     <div>
