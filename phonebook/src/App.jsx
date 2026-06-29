@@ -87,13 +87,9 @@ const App = () => {
       })
   }, [])
 
-     const addPerson = (event) => {
+      const addPerson = (event) => {
     event.preventDefault()
-
-    const personObject = {
-      name: newName,
-      number: newNumber,
-    }
+    const personObject = { name: newName, number: newNumber }
 
     personService
       .create(personObject)
@@ -103,14 +99,11 @@ const App = () => {
         setNewNumber('')
       })
       .catch(error => {
-        console.log('Full error response:', error.response);
-        if (error.response && error.response.data && error.response.data.error) {
-          alert(error.response.data.error);
-        } else {
-          alert('Error: ' + (error.message || 'Unknown error'));
-        }
+        // ਇੱਥੇ ਪੱਕਾ alert ਆਉਣਾ ਚਾਹੀਦਾ ਹੈ
+        const msg = error.response?.data?.error || 'Unknown Error'
+        alert(msg) 
       })
-  } 
+  }
 
   return (
     <div>
