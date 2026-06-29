@@ -102,19 +102,11 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
+     
       .catch(error => {
-  
-  console.log('Error object:', error)
-  
-  
-  if (error.response && error.response.data && error.response.data.error) {
-   
-    alert(error.response.data.error)
-  } else {
-    alert('An unexpected error occurred')
-  }
+  debugger; 
+  alert(error.response.data.error);
 })
-  }
 
   return (
     <div>
