@@ -87,23 +87,26 @@ const App = () => {
       })
   }, [])
 
-      const addPerson = (event) => {
-    event.preventDefault()
-    const personObject = { name: newName, number: newNumber }
-
-    personService
-      .create(personObject)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
-      .catch(error => {
-        // ਇੱਥੇ ਪੱਕਾ alert ਆਉਣਾ ਚਾਹੀਦਾ ਹੈ
-        const msg = error.response?.data?.error || 'Unknown Error'
-        alert(msg) 
-      })
+         const addPerson = async (event) => {
+  event.preventDefault()
+  
+  try {
+    const returnedPerson = await personService.create({ name: newName, number: newNumber })
+    setPersons(persons.concat(returnedPerson))
+    setNewName('')
+    setNewNumber('')
+  } catch (error) {
+ 
+    console.log('Error details:', error)
+    
+  
+    if (error.response?.data?.error) {
+      alert(error.response.data.error)
+    } else {
+      alert('Error: ' + error.message)
+    }
   }
+}
 
   return (
     <div>
