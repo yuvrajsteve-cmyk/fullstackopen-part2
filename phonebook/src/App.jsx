@@ -104,19 +104,15 @@ const App = () => {
       })
       // updated code for part 3
       .catch(error => {
-        console.log('Error details:', error.response);
-
-        if (error.response && error.response.data && error.response.data.error) {
-        
-          alert(error.response.data.error);
-        } else if (error.response && error.response.data) {
-          
-          alert(error.response.data);
-        } else {
-          
-          alert('An unknown error occurred');
-        }
-      })
+ 
+  if (error.response && error.response.data && error.response.data.error) {
+    console.log('Server Error:', error.response.data.error);
+    alert(error.response.data.error);
+  } else {
+   
+    alert('An error occurred, check the console');
+  }
+})
   }
 
   return (
