@@ -1,82 +1,94 @@
-import personService from './Services/Persons'
-import { useEffect, useState } from 'react'
+// import { useState, useEffect } from "react"
+// import axios from 'axios'
 
-const Notification = ({ notification }) => {
-  if (!notification || notification.message === null) {
-    return null
-  }
-  const isError = notification.type === 'error'
+// const App = () => {
 
-  const notificationStyle = {
-    color: isError ? 'red' : 'green',
-    background: 'lightgrey',
-    fontSize: '20px',
-    borderStyle: 'solid',
-    borderRadius: '5px',
-    padding: '10px',
-    marginBottom: '20px',
-  }
+//   const [searchQuery, setSearchQuery] = useState('')
+//   const [allCountries, setAllCountries] = useState([])
 
-  return (
-    <div style={notificationStyle}>
-      {notification.message}
-    </div>
-  )
-}
+
+//   useEffect (() => {
+//      axios
+//      .get(`https://studies.cs.helsinki.fi/restcountries/api/all`)
+//      .then(response => {
+//       setAllCountries(response.data)
+//       console.log(`Data loaded successfully` , response.data)
+//      } )
+//   }, [])
+
+//   const handleSearchChange = (event) => {
+//     setSearchQuery(event.target.value)
+//   }
+
+//   const countriesToShow = allCountries.filter(country => 
+//     country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+//   )
+
+//   let renderContent = null
+//   if (countriesToShow.length > 10) {
+//     renderContent = <p>Too many matches, specify another filter</p>
+//   } else if (countriesToShow.length <= 10 && countriesToShow.length > 1) {
+//     renderContent = <ul>
+//       {countriesToShow.map(country => 
+//         <li key={country.name.common}>{country.name.common}</li>
+//       )}
+//     </ul>
+//   } else if (countriesToShow.length === 1) {
+//     const country = countriesToShow[0]
+//     renderContent = <div>
+//       <h1>{country.name.common}</h1>
+//       <p>capital {country.capital[0]}</p>
+//       <p>area {country.area}</p>
+//       <h1>Languages :</h1> 
+//       <ul>
+//       {Object.values(country.languages).map (lang => 
+//         <li key={lang}>{lang}</li>
+//       )}
+//       </ul>
+//       <img src={country.flags.png} alt={`flag of ${country.name.common}`} />
+//     </div>
+//   }
+
+
+//   return (
+//     <div>
+//         <h1>Countries App</h1>
+//         find Countries <input value={searchQuery} onChange={handleSearchChange} />
+//         {renderContent}
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+
+
+
+
+
+import { useState, useEffect } from 'react'
+import personService from './services/persons' // 👈 ਤੇਰੀ persons.jsx ਫਾਈਲ
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [filterQuery, setFilterQuery] = useState('') 
-  const [notification, setNotification] = useState({ message: null, type: 'success' }) 
 
+  // 🔄 ਪੇਜ ਲੋਡ ਹੁੰਦੇ ਹੀ ਬੈਕਐਂਡ ਤੋਂ ਡਾਟਾ ਮੰਗਵਾਉਣਾ
   useEffect(() => {
     personService
       .getAll()
-      .then(initialPerson => {
-        setPersons(initialPerson)
-      }) 
+      .then(initialPersons => {
+        setPersons(initialPersons)
+      })
+      .catch(error => {
+        console.log('ਡਾਟਾ ਲਿਆਉਣ ਵਿੱਚ ਗਲਤੀ ਹੋਈ:', error)
+      })
   }, [])
 
-  const handleNameChange = (event) => setNewName(event.target.value)
-  const handleNumberChange = (event) => setNewNumber(event.target.value)
-  const handleFilterChange = (event) => setFilterQuery(event.target.value)
-
-  const addName = (event) => {
+  const addPerson = (event) => {
     event.preventDefault()
-
-    const existingPerson = persons.find(p => p.name?.toLowerCase() === newName.toLowerCase())
-    
-    if (existingPerson) {
-      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-        const changedPerson = { ...existingPerson, number: newNumber }
-
-        personService
-          .update(existingPerson.id, changedPerson)
-          .then(returnedPerson => {
-            setPersons(persons.map(person => person.id !== existingPerson.id ? person : returnedPerson))
-            setNewName('')
-            setNewNumber('')
-            
-            setNotification({ message: `Updated number for ${returnedPerson.name}`, type: 'success' })
-            setTimeout(() => {
-              setNotification({ message: null, type: 'success' })
-            }, 5000) 
-          })
-          .catch(error => {
-            setNotification({
-              message: `Information of ${newName} has already been removed from server`, 
-              type: 'error'
-            })
-            setPersons(persons.filter(p => p.id !== existingPerson.id))
-            setNewName('')
-            setNewNumber('')
-            setTimeout(() => setNotification({ message: null, type: 'success' }), 5000)
-          })
-      }
-      return
-    }
 
     const personObject = {
       name: newName,
@@ -86,61 +98,35 @@ const App = () => {
     personService
       .create(personObject)
       .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson)) 
+        setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
-
-        // 🛠️ ਠੀਕ ਕੀਤਾ: ਇੱਥੇ ਹੁਣ String ਦੀ ਜਗ੍ਹਾ ਸਹੀ Object ਪਾਸ ਹੁੰਦਾ ਹੈ
-        setNotification({ message: `Added ${returnedPerson.name}`, type: 'success' })
-        setTimeout(() => {
-          setNotification({ message: null, type: 'success' })
-        }, 5000) 
+      })
+      // updated code for part 3
+      .catch(error => {
+        alert(error.response.date.error)
       })
   }
 
-  const deletePerson = (id, name) => {
-    if (window.confirm(`Delete ${name}?`)) {
-      personService
-        .remove(id)
-        .then(() => {
-          setPersons(persons.filter(person => person.id !== id))
-        })
-        .catch(error => {
-          alert(`This person was already deleted from the server`)
-          setPersons(persons.filter(person => person.id !== id))
-        })
-    }
-  }
-
-  const personsToShow = filterQuery === ''
-    ? persons
-    : persons.filter(person => person.name?.toLowerCase().includes(filterQuery.toLowerCase()))
-
   return (
     <div>
-      <h1>PhoneBook</h1>
-      
-      {/* 🛠️ ਠੀਕ ਕੀਤਾ: ਇੱਥੇ message={notification} ਨੂੰ ਬਦਲ ਕੇ notification={notification} ਕਰ ਦਿੱਤਾ ਹੈ */}
-      <Notification notification={notification} />
-
-      <div>
-        filter shown with : <input value={filterQuery} onChange={handleFilterChange} />
-      </div>
-
-      <h2>add a new</h2>
-      <form onSubmit={addName}>
-        <div>name: <input value={newName} onChange={handleNameChange} /></div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange} /></div>
-        <button type="submit">add person</button>
+      <h2>Phonebook</h2>
+      <form onSubmit={addPerson}>
+        <div>
+          name: <input value={newName} onChange={(e) => setNewName(e.target.value)} />
+        </div>
+        <div>
+          number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
       </form>
-
-      <h2>Numbers</h2>
+      
+      <h3>Numbers</h3>
       <ul>
-        {personsToShow.map(person => 
-          <li key={person.id}>
-            {person.name} {person.number} {' '}
-            <button onClick={() => deletePerson(person.id, person.name)}>delete</button>
-          </li>
+        {persons.map(person => 
+          <li key={person.id}>{person.name} - {person.number}</li>
         )}
       </ul>
     </div>
