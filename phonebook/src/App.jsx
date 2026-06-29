@@ -104,7 +104,8 @@ const App = () => {
       })
       // updated code for part 3
       .catch(error => {
-        alert(error.response.date.error)
+        console.log(error)
+        alert(error.response.date?.error || 'no mistake')
       })
   }
 
