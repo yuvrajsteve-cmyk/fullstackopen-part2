@@ -104,11 +104,19 @@ const App = () => {
       })
       // updated code for part 3
         .catch(error => {
-  console.log('Error:', error); 
-  if (error.response && error.response.data && error.response.data.error) {
-    alert(error.response.data.error);
+  // ਆਹ line ਕੰਸੋਲ ਵਿੱਚ ਪੂਰਾ ਐਰਰ ਆਬਜੈਕਟ ਦਿਖਾਏਗੀ
+  console.log('Error object:', error);
+
+  if (error.response) {
+    
+    const message = error.response.data.error || 'Unknown error from server';
+    alert(message);
+  } else if (error.request) {
+  
+    alert('Server not responding');
   } else {
-    alert('Something went wrong!');
+   
+    alert('Error: ' + error.message);
   }
 })
   }
